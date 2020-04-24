@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="/stylesheets/SignIn.css">
+
+
+
+    <div class="card card-body">
+<form action="/users/login" method="POST" class="form-signin">
+  <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>  Login</h1>
+  <br>
+  <% include ./Messages/messages %>
+  <label for="inputEmpId" class="sr-only">Employee Id</label>
+  <input type="Number" name="empid" id="inputEmpId" class="form-control" placeholder="Employee Id" required autofocus>
+  <br>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  <br>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  <br>
+  <p class="text-center mb-0">
+  <a class="font-weight-bolder" style="color: #344E51;" href="/forgotPwd">Forgot Password!!!</a>
+  </p>
+</form>
+</div>

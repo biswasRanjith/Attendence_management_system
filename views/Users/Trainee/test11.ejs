@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Performance</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // var id = prompt("enter id");
+      
+            $.post("http://localhost:2019/trainee/api/getScoreById",
+        //     {
+        //  empid : id,
+        //  },
+         function(data){
+               
+              var line=data[0].empid
+                var subLen = data[0].subjects.length ;
+                console.log(subLen);
+                for(k = 0 ; k < subLen; k++)
+                line +="<tr><td>"+data[0].subjects[k].name +"</td><td>"   + data[0].subjects[k].marks+"</td></tr>" ;
+   
+                 $("#i1").append(line+"<br>") ;
+              
+         });
+        });
+    
+        
+        </script>
+        
+</head>
+
+
+
+<body style="background: #bdc3c7;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */"
+>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark mb-1">
+        <a class="navbar-brand" href="#">
+            <img src="/images/Logo.JPG" width="200px" height="40px" alt="">
+          </a>
+         
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/users/home" style="color: white">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/trainee/test" style="color: white">Performance</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/trainee/feedback" style="color: white">Feedback</a>
+            </li>
+                
+        </ul>
+       <a href="/users/logout" class="btn btn-warning navbar-right">Logout</a></div>
+    </nav>
+       
+  
+  <div class="card" style="background: #bdc3c7;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ">
+      <table class="tbstyle table display table1" style="background-color:whitesmoke; 
+      opacity: 10%;  
+      margin-top: 5% !important;
+      margin-bottom: 20% !important;
+      margin-right: 30% !important;
+      margin-left: 10% !important;
+      width: 80%; 
+      text-align-last: center; 
+      border-radius: 15px;">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Marks</th>
+              </tr>
+          </thead>
+          <tbody id="i1">
+          </tbody>
+      </table>
+  </div>
+   
+</body>
+</html>

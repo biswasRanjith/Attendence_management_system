@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Feedback</title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="/stylesheets/form.css" >
+        <script>
+                $(document).ready(function(){
+                  $("#b0").click(function(){
+                    
+                    $.post("http://localhost:2019/trainee/api/fdbs",
+                    {
+                        Batch: $(".ebatch").val(),
+                        Id: $(".eid").val(),
+                        Subject_name:$(".esbj_nm").val(),
+                        Experience:$(".eexpr:checked").val(),
+                        Feedback:$("#efdbk").val()
+                    },
+                    function(data, status)
+                    {
+                          alert("Status: " + status);
+                    });
+                  });
+                });
+                </script>
+    </head>
+    <body style="background: #bdc3c7;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */"
+    >
+    
+            <nav class="navbar navbar-expand-lg navbar-light bg-dark mb-1">
+                    <a class="navbar-brand" href="#">
+                        <img src="/images/Logo.JPG" width="200px" height="40px" alt="">
+                      </a>
+                     
+            
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item active">
+                        <a class="nav-link" href="/users/home" style="color: white">Home <span class="sr-only">(current)</span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/trainee/test" style="color: white">Performance</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="/trainee/feedback" style="color: white">Feedback</a>
+                        </li>
+                            
+                    </ul>
+                   <a href="/users/logout" class="btn btn-warning navbar-right">Logout</a></div>
+                </nav>
+                
+        <div class="container">
+            <!--<div class="imagebg"></div>-->
+            <div class="row " style="margin-top: 50px">
+                <div class="col-md-6 col-md-offset-3 form-container">
+                    <h2>Feedback</h2> 
+                    <p> Please provide your feedback below: </p>
+                    <!--<form role="form" method="post" id="reused_form">-->
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                    <div class="row">
+                                            <div class="col-sm-4 form-group">
+                                                <label for="Batch"> Batch:</label>
+                                                <input type="text" class="ebatch" id="name" name="name" required/>
+                                            </div>
+                                            <div class="col-sm-4 form-group">
+                                                <label for="Emp Id"> Emp Id:</label>
+                                                <input type="number" class="eid" id="Emp" name="Emp" required/>
+                                            </div>
+                                            <div class="col-sm-4 form-group">
+                                                    <label for="Subject_name"> Subject:</label>
+                                                    <input type="text" class="esbj_nm" name="email" required/>
+                                            </div>
+                                        </div>
+                                <label>How do you rate your overall experience?</label>
+                                <p>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="experience" class="eexpr" value="bad" >
+                                        Bad 
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="experience" class="eexpr" value="average" >
+                                        Average 
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="experience" class="eexpr" value="good" >
+                                        Good 
+                                    </label>
+                                    <label class="radio-inline">
+                                      <input type="radio" name="experience" class="eexpr" value="excellent" >
+                                      Excellent
+                                  </label>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label for="comments"> Comments:</label>
+                                <textarea class="form-control" type="textarea" name="comments" id="efdbk" placeholder="Your Comments" maxlength="6000" rows="7"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <button id="b0" class="button">submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

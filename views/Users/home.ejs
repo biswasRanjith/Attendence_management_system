@@ -1,0 +1,9 @@
+<% if(user.role=='admin'){ %>
+    <% include ./Admin/admin %>
+<% } else if(user.role=='trainee') {%>
+    <% include ./Trainee/trainee %>
+<% } else if(user.role=='manager') {%>
+    <% include ./Manager/manager %>
+<% } else {%>
+    <% include ./Co-ordinator/index %>
+<% } %>

@@ -1,0 +1,164 @@
+<link rel="stylesheet" href="/stylesheets/Admin.css">
+<script>
+    $(document).ready(function () {
+
+        $('#view').addClass('active');
+        $('#create').removeClass('active');
+        $("[name=delbtn]").click(function(){
+            var value=$(this).val();
+            $.ajax({
+              type:'delete', 
+              url:'/users/register/'+value,
+              
+              success:function(data)
+              {
+                alert('Success');
+                location.reload();
+              },
+              error:function(err)
+              {
+                 alert(err.message);
+                 location.reload();
+              }
+
+          });
+            
+        });      
+    
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable1 tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+            $("#myTable2 tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+            $("#myTable3 tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+            
+});
+    
+</script>
+<% include ../../Partials/adminNav %>
+<% include ../../Partials/adminSide %>
+
+
+<!-- Page Content  -->
+
+<div id="content" class="active">
+    <nav class="navbar navbar-expand-lg  bg-light">
+        <div class="container-fluid">
+            <button type="button" id="sidebarCollapse" class="btn btn-info">
+                <i class="fas fa-align-left"></i>
+                <span>Toggle Sidebar</span>
+            </button>
+            <div class="rounded rounded-pill shadow-lg m-auto">
+                    <div class="input-group">
+                      <input class="form-control bg-light" type="search" id="myInput" onkeyup="myFunction()" placeholder="search employees" autofocus>                     
+                    <div class="btn btn-link text-primary"><i class="fa fa-search"></i></div>
+                     
+                    </div>
+            </div>
+        </div>
+    </nav>
+    <% include ../../Messages/messages %>
+<% if((Users!=null)&&(typeof Users != 'undefined')){ %>
+    <section id="tabs" class="project-tab">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nav>
+                                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Trainees</a>
+                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Co-ordinators</a>
+                                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Managers</a>
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <table  id="table1" class="table" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Emp ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="myTable1">
+                                                <% Users.forEach(function(user) { if(user.role=='trainee') {%>
+                                            <tr>
+                                                <td><%=user.empid%></td>
+                                                <td><%=user.ename%></td>
+                                                <td><%=user.email%></td>
+                                                <td> <button value="<%=user.empid%>" name="delbtn" class='btn btn-danger btn-sm'>Delete</button></td>
+                                                <td> <a href="/users/register/<%=user.empid%>" class="btn btn-primary btn-sm">Update</a></td>
+                                            </tr>
+                                                 <% } });%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    <table id="table2" class="table" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Emp ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="myTable2">
+                                                <% Users.forEach(function(user) { if(user.role=='co-ordinator') {%>
+                                            <tr>
+                                                <td><%=user.empid%></td>
+                                                <td><%=user.ename%></td>
+                                                <td><%=user.email%></td>
+                                                <td> <button value="<%=user.empid%>" name="delbtn" class='btn btn-danger btn-sm'>Delete</button></td>
+                                                <td> <a href="/users/register/<%=user.empid%>" class="btn btn-primary btn-sm">Update</a></td>
+                                            </tr>
+                                                <% } });%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                    <table id="table3" class="table" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Emp ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="myTable3">
+                                            <% Users.forEach(function(user) { if(user.role=='manager') {%>
+                                            <tr>
+                                                <td><%=user.empid%></td>
+                                                <td><%=user.ename%></td>
+                                                <td><%=user.email%></td>
+                                                <td> <button value="<%=user.empid%>" name="delbtn" class='btn btn-danger btn-sm'>Delete</button></td>
+                                                <td> <a href="/users/register/<%=user.empid%>" class="btn btn-primary btn-sm">Update</a></td>
+                                            </tr>
+                                                <% } });%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+<% } else { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Some Error Occured!!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+<% } %>

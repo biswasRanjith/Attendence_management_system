@@ -1,0 +1,42 @@
+<style>
+body{
+    background-color: #C7C7C7;
+}
+.bcolor{
+    background-color: #E4E5E7;
+}
+.card{
+    border-radius: 3%;
+}
+</style>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+                <% include ./Messages/messages %>
+            <div class="card bcolor">
+                <div class="card-title text-center mt-5">
+                    <h3 class="text-info">Reset Password</h3>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <form action="/forgot" method="post">
+                        <div class="form-group">
+                            <div class="cols-sm-6 text-center">
+                                <label for="eid" class="cols-sm-2 control-label mb-3 h5">Enter Employee ID:</label>
+                                <div class="input-group">
+                                    <i class="fas fa-user p-2"></i>
+                                    <input type="number" value="" class="form-control" name="empid" id="eid" placeholder="employee id" required autofocus/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group text-center mt-5 mb-5">
+                                <hr>
+                                <input class='btn btn-block btn-primary' type="submit" value="Send Password Reset Link">
+                        </div> 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

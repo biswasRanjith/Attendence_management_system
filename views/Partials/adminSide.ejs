@@ -1,0 +1,22 @@
+<script>
+    $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                    $('#content').toggleClass('active');
+                });
+            });
+    </script>
+        <!-- Sidebar  -->
+    <div class="wrapper mt-5">
+        <nav id="sidebar" class="bg-secondary">
+    
+            <ul class="list-unstyled components">
+                <li id='create' class="pt-5 pb-5 ">
+                    <a href="/users/home">Add User</a>
+                </li>
+                <li id='view'>
+                    <a href="/users/viewUsers">View All Users</a>
+                </li>
+            </ul>
+    
+        </nav>

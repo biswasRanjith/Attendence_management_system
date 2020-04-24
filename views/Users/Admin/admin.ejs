@@ -1,0 +1,139 @@
+<link rel="stylesheet" href="/stylesheets/Admin.css">
+<script>
+    $(document).ready(function () {
+        var url="<%if(typeof emp != 'undefined'){%>/users/register/<%=emp.empid%>?_method=PUT<%}else{%>/users/register%><%}%>";
+        $('#reg').attr('action',url);
+        $('#view').removeClass('active');
+        $('#create').addClass('active');
+        var str="<%if(typeof emp!= 'undefined'){%><%= typeof emp.dob != 'undefined' ? emp.dob : '' %><%}%>";
+        if(str!=''){
+        str=str.split('-');
+        $("#edob").val(str[0]+'-'+str[1]+'-'+str[2]);
+        }
+        var vl="<%if(typeof emp!= 'undefined'){%><%= typeof emp.role != 'undefined' ? emp.role : '' %><%}else{%>trainee%><%}%>";
+        $('input:radio[name="role"]').filter('[value='+vl+']').attr('checked', true);
+            });
+    </script>
+<% include ../../Partials/adminNav %>
+<% include ../../Partials/adminSide %>
+
+
+
+<!-- Page Content  -->
+
+<div id="content" class="active">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+            <button type="button" id="sidebarCollapse" class="btn btn-info">
+                <i class="fas fa-align-left"></i>
+                <span>Toggle Sidebar</span>
+            </button>
+        </div>
+    </nav>
+    <% include ../../Messages/messages %>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form id="reg" action="" method="post">
+                                <div class="form-group">
+                                    <div class="cols-sm-10">
+                                    <label for="eid" class="cols-sm-2 control-label">Employee ID</label>
+                                    <div class="input-group">
+                                            <i class="fas fa-user p-2"></i>
+                                            <input type="number" value="<%if(typeof emp!= 'undefined'){%><%= typeof emp.empid != 'undefined' ? emp.empid : '' %><%}%>" class="form-control" name="empid" id="eid" placeholder="employee id" required/>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="enm" class="cols-sm-2 control-label">Employee Name</label>
+                                    <div class="cols-sm-10">
+                                    <div class="input-group">
+                                            <i class="fas fa-user p-2"></i>
+                                            <input type="text" value="<%if(typeof emp!= 'undefined'){%><%= typeof emp.ename != 'undefined' ? emp.ename : '' %><%}%>" class="form-control" name="ename" id="enm" placeholder="name" required/>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="batch" class="cols-sm-2 control-label">Batch ID</label>
+                                    <div class="cols-sm-10">
+                                    <div class="input-group">
+                                            <i class="fas fa-user p-2"></i>
+                                            <input type="text" value="<%if(typeof emp!= 'undefined'){%><%= typeof emp.batch != 'undefined' ? emp.batch : '' %><%}%>" class="form-control" name="batch" id="batch" placeholder="Batch ID" required/>                                   </div>
+                                    </div>
+                                </div>
+                        <div class="form-group">
+                            <label for="edob" class="cols-sm-2 control-label">Employee DOB</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                        <i class="fas fa-calendar-alt p-2"></i>
+                                        <input type="date" value="<%if(typeof emp!= 'undefined'){%><%= typeof emp.dob != 'undefined' ? emp.dob : '' %><%}%>" class="form-control" name="dob" id="edob" placeholder="dob" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="eemail" class="cols-sm-2 control-label">Employee email</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                        <i class="fas fa-envelope p-2"></i>
+                                    <input type="email" value="<%if(typeof emp!= 'undefined'){%><%= typeof emp.email != 'undefined' ? emp.email : '' %><%}%>" class="form-control" name="email" id="eemail" placeholder="email" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <%if(typeof emp== 'undefined'){%>
+                        <div class="form-group">
+                            <label for="epassword" class="cols-sm-2 control-label">Employee Password</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                        <i class="fas fa-lock p-2"></i>
+                                        <input type="password" class="form-control" name="password" id="epassword" placeholder="password" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                        <div class="form-group">
+                                <label for="erole" class="cols-sm-2 control-label">Employee role</label>
+                                <div class="cols-sm-10">
+                                    <div id="erole" class="input-group">
+                                        <i class="fas fa-user-tag p-2"></i>
+                                        <div class="custom-control custom-radio">
+                                            <label><input type="radio" name="role" value="trainee">Trainee</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <label><input type="radio" name="role" value="co-ordinator">Co-ordinator</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <label><input type="radio" name="role" value="manager">Manager</label>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="eaddress" class="cols-sm-2 control-label">Employee Address</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                        <i class="fas fa-map-marker-alt p-2"></i>
+                                        <textarea  class="form-control" name="address" id="eaddress" placeholder="address" required><%if(typeof emp!= 'undefined'){%><%= typeof emp.address != 'undefined' ? emp.address : '' %><%}%></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="enumber" class="cols-sm-2 control-label">Employee Ph. number</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                        <i class="fas fa-phone p-2"></i>
+                                        <input type="number" value="<%if(typeof emp!= 'undefined'){%><%= typeof emp.mobileno != 'undefined' ? emp.mobileno : '' %><%}%>" class="form-control" name="mobileno" id="enumber" placeholder="mobile number" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <input class='btn btn-primary' type="submit" value="Submit">
+                        </div>                    
+                    </form>
+                </div>
+            </div>
+        </div>                
+    </div>
+</div>   
+</div>

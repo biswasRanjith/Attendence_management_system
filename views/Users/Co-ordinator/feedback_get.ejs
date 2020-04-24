@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Feedback Form Using HTML, CSS And PHP - reusable form</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+    <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="form.css" >
+        <style>
+            
+        </style>
+<script>
+$(document).ready(function(){
+    $.ajax({
+            type: 'GET',
+            url: "http://localhost:2019/coordinator/api/fdbs",
+            success:function(data){
+                data.forEach(element => {
+                    $("#tb").append( "<tr><td>"+element.Batch+
+                        "</td><td>"+element.Id+
+                            "</td><td>"+element.Subject_name+
+                                "</td><td>"+element.Experience+ 
+                                    "</td><td>" +element.Feedback+"</td></tr>");
+                });
+            },
+            error:function( errorMessage)
+            {
+                alert(errorMessage);
+            }
+        });
+    return false;
+
+});
+</script>
+</head>
+  <body style="  background: #BBD2C5;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #536976, #BBD2C5);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #536976, #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ">
+  
+
+<nav class="navbar navbar-expand-lg navbar-light bg-dark mb-1">
+        <a class="navbar-brand" href="#">
+            <img src="/images/Logo.JPG" width="200px" height="40px" alt="">
+        </a>
+        <li class="nav-item">
+          <a class="nav-link" href="/coordinator/index" style="color: white">Home</a>
+        </li>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto"></ul>
+            <a href="/users/logout" class="btn btn-warning navbar-right">Logout</a>
+        </div>
+       
+      </nav>
+      
+
+
+
+          <div class="container">
+          <div class="row " style="margin-top: 50px">
+              <div class="col-md-12 form-container">
+                  <h2>Feedback</h2> 
+ <div>
+     <table border="5" align="center" id="tb" class="table table-striped">
+            <tr>
+                <th>Batch</th>
+                <th>ID</th>
+                <th>Subject</th>
+                <th>Experience</th>
+                <th>Feedback Comments</th>
+            </tr>
+        </tbody>
+     </table>
+ </div>
+  </body>
+</html>

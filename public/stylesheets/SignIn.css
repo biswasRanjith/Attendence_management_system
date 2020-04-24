@@ -1,0 +1,68 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background: #334d50;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #cbcaa5, #334d50);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #cbcaa5, #334d50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+.card{
+  background-color: #D4DCD4;
+  border-radius: 5%;
+}
+
+body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-left: 35%;
+  padding-right: 35%;
+  padding-bottom: 40px;
+  background-color: #BBC7BB;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+@media (max-width: 576px) { 
+  body{
+
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+ }
+ @media (min-width: 576px) and (max-width: 767.98px) {
+   body{
+  padding-left: 15%;
+  padding-right: 15%;
+  }
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+  body{
+  padding-left: 30%;
+  padding-right: 30%;
+  } 
+}

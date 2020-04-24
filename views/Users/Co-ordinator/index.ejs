@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+</head>
+      <body> 
+       <script>
+
+         // get By ID
+ $(document).ready(function()
+        {
+          $("#bid1").click(function(event)
+          {
+            $("#t1").empty();
+
+            event.preventDefault();
+              
+              var id=prompt("Enter id");
+            $.ajax({
+              type:'get',
+              url:"http://localhost:2019/coordinator/getstudent/"+id,
+              success:function(data)
+              {
+               
+  
+                $("#t1").append("<tr><th>Subject</th><th> Marks</th></tr>");
+               data.subjects.forEach(element => {
+      
+                $("#t1").append("<tr><td>"+element.name+"</td><td>"+element.marks+"</td></tr>");
+              
+               });
+              },
+              error:function(err)
+              {
+                 alert(err);
+              }
+
+          });
+        });
+
+
+
+        $("#bid2").click(function()
+          {
+            $("p").empty();
+
+            $.ajax({
+              type:'get',
+              url:"http://localhost:2019/coordinator/getstudents",
+              success:function(data)
+              {  
+                $("#t1").empty();
+                $("#t1").append("<tr><th>Emp ID</th><th>Subject</th><th>Marks</th>");
+               data.forEach(element => {
+                element.subjects.forEach(arr => {
+                $("#t1").append("<tr><td>"+element.empid+"</td><td>"+arr.name+"</td><td>"+arr.marks+"</td></tr>");
+
+                  
+                });
+               });
+              },
+              error:function(err)
+              {
+                 alert(err);
+              }
+
+          });
+        });
+
+
+
+
+    });   
+</script>
+
+<!-- Post Method-->
+<script>
+    $(document).ready(function()
+    {
+      $("#t1").empty();
+      $("p").empty();
+      $("#updateForm").empty();
+      $("#f1").click(function(){
+         var val=prompt("Enter No of Subjects!");
+         var line = '<input type="text" placeholder="enter empid" id="empid"><br><hr><br>'
+         for(i = 0 ; i < val ; i++)
+        {
+          line += '<input type=text  id=SubName'+i+' '+'placeholder="enter subject Name"><br>';
+          line += '<input type=text id=Marks'+i+' '+'placeholder=enter marks><hr><br>'
+        }
+        line += '<button onclick="postMarks('+val+')">Submit</button>'
+        $("#addScoresForm").append(line);
+       // $("#ScoreDiv").html(line);
+        $("#ScoreDiv").empty();
+        $("#t1").empty();
+        $("#updateForm").empty();
+        $("p").empty();
+    });
+  });
+ 
+  function postMarks(val){
+    var obj = [] ;
+    for(i  = 0 ; i < val ; i++){
+      var ob = {
+        name : $("#SubName"+i).val(),
+        marks : $("#Marks"+i).val()
+      }
+      obj[i] = ob ;
+    }
+    console.log(obj);
+    $.post('http://localhost:2019/coordinator/students/', {
+      empid : $("#empid").val(),
+      subjects : JSON.stringify(obj)
+    },
+    function(data){
+        alert('Saved Successfully') ;
+        $("#ScoreDiv").empty();
+        $("#t1").empty();
+        $("#updateForm").empty();
+        $("p").empty();
+        $("addScoresForm").empty();
+
+    });
+  }
+
+ 
+  </script>
+
+<!-- Update/Put Method-->
+<script>
+    $(document).ready(function(){
+    // var id = prompt("enter id");
+     //var ob = {
+   //name : $("#name").val(),
+  // marks : $("#marks").val()
+ //}
+    $('#updateScores').click(function(){
+      var id = prompt("enter id");
+         /* var ob = {
+              name : $("#name").val(),
+              marks : $("#marks").val()
+          }*/
+        $("#t1").empty();
+        $("#updateForm").empty();
+        $("p").empty();
+          if(!id)
+          {
+            $("#updateForm").append("<input type='text'>");
+          }
+          else
+          {
+            $("#updateForm").empty();
+            $("#updateForm").append("Subject Name:<input type='text' id='name'><br><br>");
+            $("#updateForm").append("Subject Marks:<input type='number' id='marks'><br><br>");
+            $("#updateForm").append("<input type='button'value='update' id='Put'><br><br>");
+
+
+          }
+          // alert("Sub Name"+$("#name").val());
+          $("#Put").click(function(){
+     $.ajax({
+         type:'put',
+         url:"http://localhost:2019/coordinator/put/"+id,
+         data:{
+            
+            name : $("#name").val(),
+            marks : $("#marks").val()
+        
+         },    
+        
+        
+             success:function(data){
+             alert("Success");
+             $("#updateForm").empty();
+        $("#t1").empty();
+        $("p").empty();
+        $("#Put").empty();
+         },
+         error:function(status){
+             alert("No data ");
+             $("#Put").empty();
+             $("#ScoreDiv").empty();
+        $("#t1").empty();
+        $("#updateForm").empty();
+        $("p").empty();
+         }
+     }) ;
+    });
+ });  
+});
+
+ </script>
+<style>
+#welcome{
+   text-align-last: center;
+  font-size: 50px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+#back{
+  background: #BBD2C5;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #536976, #BBD2C5);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #536976, #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+}</style>
+
+</body>
+</html> 
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Coordinator</title>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        
+  <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+            
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+            
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/highcharts-more.js"></script>
+  
+</head>
+<body class="bodycolor" id="back" background="background: #73C8A9;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #373B44, #73C8A9);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #373B44, #73C8A9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-dark mb-1">
+  <a class="navbar-brand" href="#">
+      <img src="/images/Logo.JPG" width="200px" height="40px" alt="">
+  </a>
+  <li class="nav-item">
+    <a class="nav-link" href="/coordinator/index" style="color: white">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/coordinator/getfeedback" style="color: white">Feedback</a>
+  </li>
+  
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto"></ul>
+      <a href="/users/logout" class="btn btn-warning navbar-right">Logout</a>
+  </div>
+ 
+</nav>
+
+
+  
+<h3  id="welcome">Welcome to Coordinator Portal </h3>
+
+
+<div class="container">
+  <div class="row">
+  <div class="col-md-3">
+      
+      <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6">
+                <i class="fa fa-list-ol fa-5x"></i>
+              </div>
+              <div class="col-xs-6 text-right">
+                <p class="announcement-heading">Bootcamp</p>
+              </div>
+            </div>
+          </div>
+            <a href="#">
+            <div class="panel-footer announcement-bottom">
+              <div class="row">
+                <div class="col-xs-6" id="bid2" >
+                    View Details
+                </div>
+                <div class="col-xs-6 text-right">
+                  <i class="fa fa-arrow-circle-right"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        
+  </div>
+
+
+  <div class="container">
+    <div class="row">
+    <div class="col-md-3">
+        
+        <div class="panel panel-info">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-6">
+                  <i class="fa fa-list-ol fa-5x"></i>
+                </div>
+                <div class="col-xs-6 text-right">
+                  <p class="announcement-heading">Bootcamp</p>
+                </div>
+              </div>
+            </div>
+            <a href="#">
+              <div class="panel-footer announcement-bottom">
+                <div class="row">
+                  <div class="col-xs-6" id="bid1">
+                    ViewByID
+                  </div>
+                  <div class="col-xs-6 text-right">
+                    <i class="fa fa-arrow-circle-right"></i>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          
+    </div>
+  
+
+
+   
+<div class="container">
+  <div class="row">
+  <div class="col-md-3">
+      
+      <div class="panel panel-info ">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6">
+                <i class="fa fa-list-ol fa-5x"></i>
+              </div>
+              <div class="col-xs-6 text-right">
+                <p class="announcement-heading">Bootcamp</p>
+              </div>
+            </div>
+          </div>
+          <a href="#">
+            <div class="panel-footer announcement-bottom">
+              <div class="row">
+                <div class="col-xs-6" id="updateScores">
+                  Update Scores
+                </div>
+                <div class="col-xs-6 text-right">
+                  <i class="fa fa-arrow-circle-right"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        
+  </div>
+
+
+   
+<div class="container">
+  <div class="row">
+  <div class="col-md-3">
+      
+      <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6">
+                <i class="fa fa-list-ol fa-5x"></i>
+              </div>
+              <div class="col-xs-6 text-right">
+                <p class="announcement-heading">Bootcamp</p>
+              </div>
+            </div>
+          </div>
+          <a href="#">
+            <div class="panel-footer announcement-bottom">
+              <div class="row">
+                <div class="col-xs-6" id="f1">
+                  Add Scores
+                </div>
+                <div class="col-xs-6 text-right">
+                  <i class="fa fa-arrow-circle-right"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        
+  </div>
+
+
+  
+ <table class="table table-bordered display" id="t1">
+    
+
+  </table>
+  <form id="updateForm"> </form>
+  <form id="addScoresForm"> </form>
+  
+  
+  <p id="pid1"></p>
+<p id="pid2"></p>
+
+     
+
+</body>
+</html>
+
+
+

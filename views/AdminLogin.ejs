@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="/stylesheets/SignIn.css">
+
+<script>
+    $(document).ready(function(){
+
+        $("form").submit(function(){
+           if(($("#inputUser").val()=="thbs")&&($("#inputPassword").val()=="thbs123!")){   
+            return true;
+           }
+           else{
+               $("#alert").show();
+               return false;
+           }
+        });
+    });
+
+</script>
+
+    <div class="card card-body">
+    <form action="/users/adminAuth" method="POST" class="form-signin">
+  <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>  Login</h1>
+  <br>
+  <p id="alert" style="color: red; display:none; text-align:center">INVALID CREDENTIALS!!</p>
+  <% include ./Messages/messages %>
+  <label for="inputUser" class="sr-only">UserName</label>
+  <input type="text" name="ename" id="inputUser" class="form-control" placeholder="User Name" required autofocus>
+  <br>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  <br>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+</form>
+</div>
